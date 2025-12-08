@@ -1,0 +1,24 @@
+FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
+
+WORKDIR /src
+
+COPY . .
+
+RUN dotnet restore src/Template.Api/Template.Api.csproj
+
+RUN dotnet ef migrations script \
+    --project src/Template.Infrastructure/Template.Infrastructure.csproj \
+    --startup-project src/Template.Api/Template.Api.csproj \
+    --idempotent \
+    --output /migrations.sql
+
+
+FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS runner
+WORKDIR /app
+
+COPY --from=build /migrations.sql .
+COPY ./scripts/migrate.sh .
+
+RUN chmod +x migrate.sh
+
+ENTRYPOINT ["./migrate.sh"]

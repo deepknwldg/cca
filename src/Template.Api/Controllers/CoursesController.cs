@@ -11,7 +11,7 @@ namespace Template.Api.Controllers;
 
 [ApiController]
 [Tags(ApiTags.Courses)]
-[Route("api/v{version:apiVersion}/")]
+[Route("api")]
 public class CoursesController : ControllerBase
 {
     private readonly ICourseService _service;
@@ -23,7 +23,7 @@ public class CoursesController : ControllerBase
 
     [EndpointSummary("Создание курса")]
     [EndpointName(ApiRouting.Courses.Create)]
-    [HttpPost]
+    [HttpPost(ApiRouting.Courses.Create)]
     public async Task<IActionResult> Create(
         [Description("Тело запроса"), FromBody] CreateCourseRequest request)
     {
@@ -34,7 +34,7 @@ public class CoursesController : ControllerBase
 
     [EndpointSummary("Получение курса по идентификатору")]
     [EndpointName(ApiRouting.Courses.GetById)]
-    [HttpGet("{id:guid}")]
+    [HttpGet(ApiRouting.Courses.GetById)]
     public async Task<IActionResult> GetById(
         [Description("Идентификатор курса"), FromRoute] Guid id)
     {
@@ -44,7 +44,7 @@ public class CoursesController : ControllerBase
 
     [EndpointSummary("Получение всех курсов")]
     [EndpointName(ApiRouting.Courses.GetAll)]
-    [HttpGet]
+    [HttpGet(ApiRouting.Courses.GetAll)]
     public async Task<IActionResult> GetAll()
     {
         var result = await _service.GetAllAsync();
@@ -53,7 +53,7 @@ public class CoursesController : ControllerBase
 
     [EndpointSummary("Обновление курса")]
     [EndpointName(ApiRouting.Courses.Update)]
-    [HttpPut("{id:guid}")]
+    [HttpPut(ApiRouting.Courses.Update)]
     public async Task<IActionResult> Update(
         [Description("Идентификатор курса"), FromRoute] Guid id,
         [Description("Тело запроса"), FromBody] UpdateCourseRequest request)
@@ -65,7 +65,7 @@ public class CoursesController : ControllerBase
 
     [EndpointSummary("Удаление курса")]
     [EndpointName(ApiRouting.Courses.Delete)]
-    [HttpDelete("{id:guid}")]
+    [HttpDelete(ApiRouting.Courses.Delete)]
     public async Task<IActionResult> Delete(
         [Description("Идентификатор курса"), FromRoute] Guid id)
     {

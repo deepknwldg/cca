@@ -11,7 +11,7 @@ namespace Template.Api.Controllers;
 
 [ApiController]
 [Tags(ApiTags.Lessons)]
-[Route("api/v{version:apiVersion}/")]
+[Route("api")]
 public class LessonsController : ControllerBase
 {
     private readonly ILessonService _service;
@@ -23,7 +23,7 @@ public class LessonsController : ControllerBase
 
     [EndpointSummary("Создание урока")]
     [EndpointName(ApiRouting.Lessons.Create)]
-    [HttpPost]
+    [HttpPost(ApiRouting.Lessons.Create)]
     public async Task<IActionResult> Create(
         [Description("Тело запроса"), FromBody] CreateLessonRequest request)
     {
@@ -34,7 +34,7 @@ public class LessonsController : ControllerBase
 
     [EndpointSummary("Получение урока по идентификатору")]
     [EndpointName(ApiRouting.Lessons.GetById)]
-    [HttpGet("{id:guid}")]
+    [HttpGet(ApiRouting.Lessons.GetById)]
     public async Task<IActionResult> GetById(
         [Description("Идентификатор урока"), FromRoute] Guid id)
     {
@@ -44,7 +44,7 @@ public class LessonsController : ControllerBase
 
     [EndpointSummary("Получение урока по идентификатору курса")]
     [EndpointName(ApiRouting.Lessons.GetByCourse)]
-    [HttpGet("{courseId:guid}")]
+    [HttpGet(ApiRouting.Lessons.GetByCourse)]
     public async Task<IActionResult> GetByCourse(
         [Description("Идентификатор курса"), FromRoute] Guid courseId)
     {
@@ -54,7 +54,7 @@ public class LessonsController : ControllerBase
 
     [EndpointSummary("Обновление урока")]
     [EndpointName(ApiRouting.Lessons.Update)]
-    [HttpPut("{id:guid}")]
+    [HttpPut(ApiRouting.Lessons.Update)]
     public async Task<IActionResult> Update(
          [Description("Идентификатор курса"), FromRoute] Guid id,
          [Description("Тело запроса"), FromBody] UpdateLessonRequest request)
@@ -66,7 +66,7 @@ public class LessonsController : ControllerBase
 
     [EndpointSummary("Удаление урока")]
     [EndpointName(ApiRouting.Lessons.Delete)]
-    [HttpDelete("{id:guid}")]
+    [HttpDelete(ApiRouting.Lessons.Update)]
     public async Task<IActionResult> Delete(
          [Description("Идентификатор курса"), FromRoute] Guid id)
     {

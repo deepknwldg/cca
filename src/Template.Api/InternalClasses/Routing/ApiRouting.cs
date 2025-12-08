@@ -6,34 +6,42 @@ internal static class ApiRouting
 
     public static class Courses
     {
-        public const string Create = $"{BaseUrl}/courses/create";
-        public const string GetById = $"{BaseUrl}/courses/get-by-id";
-        public const string GetAll = $"{BaseUrl}/courses/get-all";
-        public const string Update = $"{BaseUrl}/courses/update";
-        public const string Delete = $"{BaseUrl}/courses/delete";
+        private const string Controller = $"{BaseUrl}/courses";
+
+        public const string Create = $"{Controller}/create";
+        public const string GetById = $"{Controller}/get-by-id/{{id:guid}}";
+        public const string GetAll = $"{Controller}/get-all";
+        public const string Update = $"{Controller}/update/{{id:guid}}";
+        public const string Delete = $"{Controller}/delete/{{id:guid}}";
     }
 
     public static class Enrollments
     {
-        public const string Enroll = $"{BaseUrl}/enrollments/enroll";
-        public const string Remove = $"{BaseUrl}/enrollments/remove";
+        private const string Controller = $"{BaseUrl}/enrollments";
+
+        public const string Enroll = $"{Controller}/enroll";
+        public const string Remove = $"{Controller}/remove/{{userId:guid}}/{{courseId:guid}}";
     }
 
     public static class Lessons
     {
-        public const string Create = $"{BaseUrl}/lessons/create";
-        public const string GetById = $"{BaseUrl}/lessons/get-by-id";
-        public const string GetByCourse = $"{BaseUrl}/lessons/get-by-course";
-        public const string Update = $"{BaseUrl}/lessons/update";
-        public const string Delete = $"{BaseUrl}/lessons/delete";
+        private const string Controller = $"{BaseUrl}/lessons";
+
+        public const string Create = $"{Controller}/create";
+        public const string GetById = $"{Controller}/get-by-id/{{id:guid}}";
+        public const string GetByCourse = $"{Controller}/get-by-course/{{courseId:guid}}";
+        public const string Update = $"{Controller}/update/{{id:guid}}";
+        public const string Delete = $"{Controller}/delete/{{id:guid}}";
     }
 
     public static class Users
     {
-        public const string Create = $"{BaseUrl}/users/create";
-        public const string GetById = $"{BaseUrl}/users/get-by-id";
-        public const string GetAll = $"{BaseUrl}/users/get-all";
-        public const string Update = $"{BaseUrl}/users/update";
-        public const string Delete = $"{BaseUrl}/users/delete";
+        private const string Controller = $"{BaseUrl}/users";
+
+        public const string Create = $"{Controller}/create";
+        public const string GetById = $"{Controller}/get-by-id/{{id:guid}}";
+        public const string GetAll = $"{Controller}/get-all";
+        public const string Update = $"{Controller}/update/{{id:guid}}";
+        public const string Delete = $"{Controller}/delete/{{id:guid}}";
     }
 }

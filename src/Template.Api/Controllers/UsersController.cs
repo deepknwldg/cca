@@ -11,7 +11,7 @@ namespace Template.Api.Controllers;
 
 [ApiController]
 [Tags(ApiTags.Users)]
-[Route("api/v{version:apiVersion}/")]
+[Route("api")]
 public class UsersController : ControllerBase
 {
     private readonly IUserService _service;
@@ -23,7 +23,7 @@ public class UsersController : ControllerBase
 
     [EndpointSummary("Создание пользователя")]
     [EndpointName(ApiRouting.Users.Create)]
-    [HttpPost]
+    [HttpPost(ApiRouting.Users.Create)]
     public async Task<IActionResult> Create(
         [Description("Тело запроса"), FromBody] CreateUserRequest request)
     {
@@ -34,7 +34,7 @@ public class UsersController : ControllerBase
 
     [EndpointSummary("Получение пользователя по идентификатору")]
     [EndpointName(ApiRouting.Users.GetById)]
-    [HttpGet("{id:guid}")]
+    [HttpGet(ApiRouting.Users.GetById)]
     public async Task<IActionResult> GetById(
         [Description("Идентификатор пользователя"), FromRoute] Guid id)
     {
@@ -44,7 +44,7 @@ public class UsersController : ControllerBase
 
     [EndpointSummary("Получение всех пользователей")]
     [EndpointName(ApiRouting.Users.GetAll)]
-    [HttpGet]
+    [HttpGet(ApiRouting.Users.GetAll)]
     public async Task<IActionResult> GetAll()
     {
         var items = await _service.GetAllAsync();
@@ -53,7 +53,7 @@ public class UsersController : ControllerBase
 
     [EndpointSummary("Обновление пользователя")]
     [EndpointName(ApiRouting.Users.Update)]
-    [HttpPut("{id:guid}")]
+    [HttpPut(ApiRouting.Users.Update)]
     public async Task<IActionResult> Update(
         [Description("Идентификатор пользователя"), FromRoute] Guid id,
         [Description("Тело запроса"), FromBody] UpdateUserRequest request)
@@ -65,7 +65,7 @@ public class UsersController : ControllerBase
 
     [EndpointSummary("Удаление пользователя")]
     [EndpointName(ApiRouting.Users.Delete)]
-    [HttpDelete("{id:guid}")]
+    [HttpDelete(ApiRouting.Users.Delete)]
     public async Task<IActionResult> Delete(
         [Description("Идентификатор пользователя"), FromRoute] Guid id)
     {

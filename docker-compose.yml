@@ -1,0 +1,50 @@
+services:
+  template-service:
+    container_name: template-service
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      postgres:
+        condition: service_healthy
+      migrations-runner:
+        condition: service_completed_successfully
+    environment:
+      ASPNETCORE_ENVIRONMENT: "Development"
+      ASPNETCORE_URLS: "http://+:8080"
+      ConnectionStrings__DefaultConnection: "Host=postgres;Port=5432;Database=template_db;Username=template_user;Password=template_pass"
+    ports:
+      - "8080:8080"
+    restart: unless-stopped
+
+  migrations-runner:
+    build:
+      context: .
+      dockerfile: Dockerfile.migrations
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      PGPASSWORD: "template_pass"
+    restart: "no"
+
+  postgres:
+    image: postgres:16
+    container_name: postgres
+    environment:
+      POSTGRES_DB: template_db
+      POSTGRES_USER: template_user
+      POSTGRES_PASSWORD: template_pass
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U template_user"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+volumes:
+  postgres_data:

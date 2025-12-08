@@ -11,7 +11,7 @@ namespace Template.Api.Controllers;
 
 [ApiController]
 [Tags(ApiTags.Enrollments)]
-[Route("api/v{version:apiVersion}/")]
+[Route("api")]
 public class EnrollmentsController : ControllerBase
 {
     private readonly IEnrollmentService _service;
@@ -23,7 +23,7 @@ public class EnrollmentsController : ControllerBase
 
     [EndpointSummary("Регистрация на курс")]
     [EndpointName(ApiRouting.Enrollments.Enroll)]
-    [HttpPost]
+    [HttpPost(ApiRouting.Enrollments.Enroll)]
     public async Task<IActionResult> Enroll(
         [Description("Тело запроса"), FromBody] EnrollUserRequest request)
     {
@@ -33,12 +33,12 @@ public class EnrollmentsController : ControllerBase
         return Ok(result);
     }
 
-    [EndpointSummary("Удаление с курс")]
-    [EndpointName(ApiRouting.Enrollments.Enroll)]
-    [HttpDelete]
+    [EndpointSummary("Удаление с курса")]
+    [EndpointName(ApiRouting.Enrollments.Remove)]
+    [HttpDelete(ApiRouting.Enrollments.Remove)]
     public async Task<IActionResult> Remove(
-        [Description("Идентификатор пользователя"), FromQuery] Guid userId,
-        [Description("Идентификатор курса"), FromQuery] Guid courseId)
+        [Description("Идентификатор пользователя"), FromRoute] Guid userId,
+        [Description("Идентификатор курса"), FromRoute] Guid courseId)
     {
         var deleted = await _service.RemoveAsync(userId, courseId);
         return deleted ? NoContent() : NotFound();
