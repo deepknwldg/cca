@@ -1,5 +1,4 @@
-﻿using Mapster;
-using MapsterMapper;
+using Mapster;
 using System.Reflection;
 
 namespace Template.Api.Extensions;

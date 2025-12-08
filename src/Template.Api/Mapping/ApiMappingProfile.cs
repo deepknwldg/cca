@@ -1,4 +1,4 @@
-﻿
+
 using Mapster;
 using Template.Api.Models.Course;
 using Template.Api.Models.Enrollments;
@@ -27,7 +27,6 @@ public class ApiMappingProfile : IRegister
             .Map(dest => dest.Title, src => src.Title)
             .Map(dest => dest.Description, src => src.Description);
 
-
         // ============================
         // Application DTO → Domain Entity
         // ============================
@@ -39,7 +38,6 @@ public class ApiMappingProfile : IRegister
             .Map(dest => dest.Title, src => src.Title)
             .Map(dest => dest.Description, src => src.Description);
 
-
         // ============================
         // Domain Entity → Application DTO
         // ============================
@@ -48,7 +46,6 @@ public class ApiMappingProfile : IRegister
             .Map(dest => dest.Title, src => src.Title)
             .Map(dest => dest.Description, src => src.Description);
 
-
         // ============================
         // Application DTO → API Response
         // ============================
@@ -56,7 +53,6 @@ public class ApiMappingProfile : IRegister
             .Map(dest => dest.Id, src => src.Id)
             .Map(dest => dest.Title, src => src.Title)
             .Map(dest => dest.Description, src => src.Description);
-
 
         // ============================
         // Domain Entity → Extended CourseDetailsDto
@@ -67,7 +63,6 @@ public class ApiMappingProfile : IRegister
             .Map(dest => dest.Description, src => src.Description)
             .Map(dest => dest.Lessons,
                  src => src.Lessons.Select(l => l.Title).ToList());
-
 
         // ===========================================================
         // USER MAPPINGS
@@ -83,7 +78,7 @@ public class ApiMappingProfile : IRegister
         config.NewConfig<UpdateUserRequest, UpdateUserDto>()
             .Map(dest => dest.Email, src => src.Email)
             .Map(dest => dest.PasswordHash,
-                 src => src.Password != null ? src.Password : null)
+                 src => src.Password ?? null)
             .Map(dest => dest.FirstName, src => src.FirstName)
             .Map(dest => dest.LastName, src => src.LastName);
 
@@ -112,8 +107,6 @@ public class ApiMappingProfile : IRegister
             .Map(dest => dest.FirstName, src => src.Profile.FirstName)
             .Map(dest => dest.LastName, src => src.Profile.LastName);
 
-
-
         // ===========================================================
         // LESSON MAPPINGS
         // ===========================================================
@@ -130,8 +123,6 @@ public class ApiMappingProfile : IRegister
         // Domain → Application DTO
         config.NewConfig<Lesson, LessonResultDto>()
             .Map(dest => dest.CourseId, src => src.CourseId);
-
-
 
         // ===========================================================
         // ENROLLMENT MAPPINGS

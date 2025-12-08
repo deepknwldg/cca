@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Template.Application.Abstractions.Persistence.Repositories;
 using Template.Domain.Entities;
 
@@ -10,8 +10,10 @@ public class UserRepository : Repository<User>, IUserRepository
 
     public Task<User?> GetWithProfileAsync(Guid id)
     {
-        return _db.Users
-            .Include(x => x.Profile)
-            .FirstOrDefaultAsync(x => x.Id == id);
+        throw new NotImplementedException();
+
+        //return _db.Users
+        //    .Include(x => x.Profile)
+        //    .FirstOrDefaultAsync(x => x.Id == id);
     }
 }

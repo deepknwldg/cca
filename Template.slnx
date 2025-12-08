@@ -1,4 +1,7 @@
 <Solution>
+  <Folder Name="/shared/">
+    <Project Path="shared/Template.Contracts/Template.Contracts.csproj" />
+  </Folder>
   <Folder Name="/src/">
     <Project Path="src/Template.Api/Template.Api.csproj" />
     <Project Path="src/Template.Application/Template.Application.csproj" Id="2248b4b0-55df-43fc-baf0-4eb4432236e3" />
@@ -10,5 +13,4 @@
     <Project Path="tests/Template.Application.Tests/Template.Application.Tests.csproj" Id="b43e0993-161c-4c22-b8ef-48ef5532115a" />
     <Project Path="tests/Template.Infrastructure.Tests/Template.Infrastructure.Tests.csproj" Id="2351d3f9-8848-4e29-b784-51969ab90a68" />
   </Folder>
-  <Project Path="src/Template.Contracts/Template.Contracts.csproj" Id="b31cdfcd-3261-4d48-ab0a-dfb2771c1a3e" />
 </Solution>

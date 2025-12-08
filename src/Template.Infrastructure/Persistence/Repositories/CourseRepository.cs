@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Template.Application.Abstractions.Persistence.Repositories;
 using Template.Domain.Entities;
 
@@ -13,8 +13,9 @@ public class CourseRepository : Repository<Course>, ICourseRepository
 
     public async Task<Course?> GetWithLessonsAsync(Guid id)
     {
-        return await _db.Courses
-            .Include(c => c.Lessons)
-            .FirstOrDefaultAsync(c => c.Id == id);
+        throw new NotImplementedException();
+        //return await _db.Courses
+        //    .Include(c => c.Lessons)
+        //    .FirstOrDefaultAsync(c => c.Id == id);
     }
 }

@@ -1,4 +1,4 @@
-﻿using Mapster;
+using Mapster;
 using Template.Application.Abstractions.Persistence.Repositories;
 using Template.Application.Abstractions.Services;
 using Template.Application.Models.Enrollments;
@@ -33,11 +33,15 @@ public class EnrollmentService : IEnrollmentService
         {
             var user = await _userRepo.GetByIdAsync(dto.UserId);
             if (user == null)
+            {
                 throw new InvalidOperationException("User not found");
+            }
 
             var course = await _courseRepo.GetByIdAsync(dto.CourseId);
             if (course == null)
+            {
                 throw new InvalidOperationException("Course not found");
+            }
 
             var enrollment = new Enrollment
             {
@@ -66,7 +70,10 @@ public class EnrollmentService : IEnrollmentService
         try
         {
             var entity = await _enrollmentRepo.GetAsync(userId, courseId);
-            if (entity == null) return false;
+            if (entity == null)
+            {
+                return false;
+            }
 
             _enrollmentRepo.Remove(entity);
             await _uow.SaveChangesAsync();

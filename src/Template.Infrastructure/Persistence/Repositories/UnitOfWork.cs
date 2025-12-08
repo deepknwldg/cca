@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore.Storage;
+using Microsoft.EntityFrameworkCore.Storage;
 using Template.Application.Abstractions.Persistence.Repositories;
 
 namespace Template.Infrastructure.Persistence.Repositories;
@@ -7,7 +7,7 @@ public class UnitOfWork : IUnitOfWork
 {
     private readonly ApplicationDbContext _db;
     private IDbContextTransaction? _transaction;
-    private int _transactionDepth = 0;
+    private int _transactionDepth;
 
     public UnitOfWork(ApplicationDbContext db)
     {
@@ -27,7 +27,9 @@ public class UnitOfWork : IUnitOfWork
     public async Task CommitAsync(CancellationToken cancellationToken = default)
     {
         if (_transactionDepth == 0)
+        {
             return;
+        }
 
         _transactionDepth--;
 
@@ -42,7 +44,9 @@ public class UnitOfWork : IUnitOfWork
     public async Task RollbackAsync(CancellationToken cancellationToken = default)
     {
         if (_transaction == null)
+        {
             return;
+        }
 
         _transactionDepth = 0;
 

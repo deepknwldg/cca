@@ -1,4 +1,4 @@
-﻿using Mapster;
+using Mapster;
 using Template.Application.Abstractions.Persistence.Repositories;
 using Template.Application.Abstractions.Services;
 using Template.Application.Models.Users;
@@ -64,11 +64,16 @@ public class UserService : IUserService
         try
         {
             var user = await _repo.GetWithProfileAsync(id);
-            if (user == null) return false;
+            if (user == null)
+            {
+                return false;
+            }
 
             user.Email = dto.Email;
             if (dto.PasswordHash != null)
+            {
                 user.PasswordHash = dto.PasswordHash;
+            }
 
             user.Profile.FirstName = dto.FirstName;
             user.Profile.LastName = dto.LastName;
@@ -92,7 +97,10 @@ public class UserService : IUserService
         try
         {
             var user = await _repo.GetByIdAsync(id);
-            if (user == null) return false;
+            if (user == null)
+            {
+                return false;
+            }
 
             _repo.Remove(user);
             await _uow.SaveChangesAsync();

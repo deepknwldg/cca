@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Template.Application.Abstractions.Persistence.Repositories;
 using Template.Domain.Entities;
 
@@ -10,9 +10,11 @@ public class LessonRepository : Repository<Lesson>, ILessonRepository
 
     public async Task<IReadOnlyList<Lesson>> GetByCourseIdAsync(Guid courseId)
     {
-        return await _db.Lessons
-            .Where(x => x.CourseId == courseId)
-            .OrderBy(x => x.Title)
-            .ToListAsync();
+        throw new NotImplementedException();
+
+        //return await _db.Lessons
+        //    .Where(x => x.CourseId == courseId)
+        //    .OrderBy(x => x.Title)
+        //    .ToListAsync();
     }
 }

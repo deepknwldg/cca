@@ -1,6 +1,8 @@
-﻿using Microsoft.Extensions.Configuration;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Template.Application.Abstractions.Persistence.Repositories;
+using Template.Infrastructure.Persistence;
 using Template.Infrastructure.Persistence.Repositories;
 
 namespace Template.Infrastructure;
@@ -11,10 +13,10 @@ public static class DependencyInjection
         this IServiceCollection services,
         IConfiguration config)
     {
-        //services.AddDbContext<ApplicationDbContext>(options =>
-        //{
-        //    options.UseNpgsql(config.GetConnectionString("DefaultConnection"));
-        //});
+        services.AddDbContext<ApplicationDbContext>(options =>
+        {
+            options.UseNpgsql(config.GetConnectionString("DefaultConnection"));
+        });
 
         services.AddScoped<IUnitOfWork, UnitOfWork>();
 

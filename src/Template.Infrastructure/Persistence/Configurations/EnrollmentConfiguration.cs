@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Template.Domain.Entities;
 
@@ -25,6 +25,9 @@ public class EnrollmentConfiguration : IEntityTypeConfiguration<Enrollment>
             .HasColumnName("enrolled_at")
             .HasDefaultValueSql("CURRENT_TIMESTAMP")
             .HasComment("Дата подписки пользователя на курс");
+
+        builder.HasIndex(e => e.CourseId)
+            .HasDatabaseName("ix_enrollments_course_id");
 
         builder.HasIndex(e => e.EnrolledAt)
             .HasDatabaseName("ix_enrollments_enrolled_at");
