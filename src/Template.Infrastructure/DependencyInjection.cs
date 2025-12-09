@@ -1,6 +1,8 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Npgsql;
 using Template.Application.Abstractions.Persistence.Repositories;
 using Template.Infrastructure.Persistence;
@@ -11,7 +13,7 @@ namespace Template.Infrastructure;
 
 public static class DependencyInjection
 {
-    public static IServiceCollection AddInfrastructure(
+    public static IServiceCollection AddInfrastructureLayer(
         this IServiceCollection services,
         IConfiguration config)
     {
@@ -20,9 +22,23 @@ public static class DependencyInjection
         {
             Password = options.DbPassword
         };
-        services.AddDbContext<ApplicationDbContext>(options =>
+        services.AddDbContext<ApplicationDbContext>((sp, options) =>
         {
-            options.UseNpgsql(builder.ConnectionString);
+            var loggerFactory = sp.GetRequiredService<ILoggerFactory>();
+
+            options.UseNpgsql(builder.ConnectionString)
+                .EnableSensitiveDataLogging()
+                .EnableDetailedErrors()
+                .UseLoggerFactory(loggerFactory)
+                .LogTo(Serilog.Log.Logger.Information,
+                       new[]
+                       {
+                           DbLoggerCategory.Database.Command.Name,
+                           DbLoggerCategory.Query.Name,
+                       },
+                       LogLevel.Information,
+                       DbContextLoggerOptions.SingleLine |
+                       DbContextLoggerOptions.UtcTime);
         });
 
         services.AddScoped<IUnitOfWork, UnitOfWork>();

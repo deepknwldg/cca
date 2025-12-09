@@ -7,7 +7,7 @@ namespace Template.Application;
 
 public static class DependencyInjection
 {
-    public static IServiceCollection AddApplication(this IServiceCollection services)
+    public static IServiceCollection AddApplicationLayer(this IServiceCollection services)
     {
         services.AddScoped<IServiceExecutor, ServiceExecutor>();
         services.AddValidatorsFromAssembly(typeof(DependencyInjection).Assembly);

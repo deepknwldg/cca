@@ -1,4 +1,4 @@
-using Template.Api.Exceptions;
+using Serilog;
 using Template.Api.Extensions;
 using Template.Application;
 using Template.Infrastructure;
@@ -7,15 +7,14 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
-builder.Services.AddOpenApiLayer();
-
-builder.Services.AddApplication();
-builder.Services.AddInfrastructure(builder.Configuration);
+builder.AddSerilog();
+builder.Services.AddApplicationLayer();
+builder.Services.AddInfrastructureLayer(builder.Configuration);
 builder.Services.AddApiLayer();
-builder.Services.AddProblemDetailsLayer();
-builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 
 var app = builder.Build();
+
+app.UseSerilogRequestLogging();
 
 app.MapOpenApi();
 app.UseSwaggerUI(options => options.SwaggerEndpoint("/openapi/v1.json", "Swagger"));

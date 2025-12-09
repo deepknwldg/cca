@@ -1,0 +1,38 @@
+{
+  "Serilog": {
+    "Using": [
+      "Elastic.Serilog.Sinks",
+      "Serilog.Formatting.Compact"
+    ],
+    "MinimumLevel": {
+      "Default": "Information",
+      "Override": {
+        "Microsoft": "Information",
+        "Microsoft.AspNetCore": "Warning",
+        "Microsoft.EntityFrameworkCore": "Information",
+        "Microsoft.EntityFrameworkCore.Database.Command": "Information",
+        "System": "Warning",
+        "Microsoft.Hosting.Lifetime": "Warning"
+      }
+    },
+    "WriteTo": [
+      {
+        "Name": "Elastic",
+        "Args": {
+          "nodeUris": "http://elk-host:9200",
+          "indexFormat": "template-service-logs",
+          "bootstrapMethod": "Node",
+          "format": "ElasticCommonSchema"
+        }
+      }
+    ],
+    "Enrich": [
+      "FromLogContext",
+      "WithMachineName",
+      "WithThreadId"
+    ],
+    "Properties": {
+      "Application": "TemplateService"
+    }
+  }
+}
