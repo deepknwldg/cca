@@ -9,8 +9,6 @@
     <Project Path="src/Template.Infrastructure/Template.Infrastructure.csproj" Id="a2ee934c-1c36-4407-83c7-9faac2199f2e" />
   </Folder>
   <Folder Name="/tests/">
-    <Project Path="tests/Template.Api.Tests/Template.Api.Tests.csproj" Id="dd87fb94-2101-42c5-a007-bd315ede52f5" />
-    <Project Path="tests/Template.Application.Tests/Template.Application.Tests.csproj" Id="b43e0993-161c-4c22-b8ef-48ef5532115a" />
-    <Project Path="tests/Template.Infrastructure.Tests/Template.Infrastructure.Tests.csproj" Id="2351d3f9-8848-4e29-b784-51969ab90a68" />
+    <Project Path="tests/Template.Tests/Template.Tests.csproj" Id="7a44a6d2-4071-4788-883e-0187a7042016" />
   </Folder>
 </Solution>
