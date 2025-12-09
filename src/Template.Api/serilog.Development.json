@@ -19,9 +19,11 @@
       {
         "Name": "Elastic",
         "Args": {
-          "nodeUris": "http://elk-host:9200",
-          "indexFormat": "template-service-logs",
+          "nodeUris": "http://host:9200",
+          "indexFormat": "template-service-logs-{0:yyyy.MM}",
           "bootstrapMethod": "Node",
+          "autoRegisterTemplate": true,
+          "autoRegisterTemplateVersion": "ESv7",
           "format": "ElasticCommonSchema"
         }
       }
