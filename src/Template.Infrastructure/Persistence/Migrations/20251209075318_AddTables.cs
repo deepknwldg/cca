@@ -35,8 +35,8 @@ namespace Template.Infrastructure.Migrations
                 columns: table => new
                 {
                     id = table.Column<Guid>(type: "uuid", nullable: false, comment: "Идентификатор пользователя"),
-                    password_hash = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: false, comment: "Хэш пароля пользователя"),
-                    PasswordHash = table.Column<string>(type: "text", nullable: false)
+                    email = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false, comment: "Email пользователя"),
+                    password_hash = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: false, comment: "Хэш пароля пользователя")
                 },
                 constraints: table =>
                 {
@@ -126,7 +126,7 @@ namespace Template.Infrastructure.Migrations
                 column: "title");
 
             migrationBuilder.CreateIndex(
-                name: "IX_enrollments_course_id",
+                name: "ix_enrollments_course_id",
                 schema: "public",
                 table: "enrollments",
                 column: "course_id");
@@ -154,7 +154,7 @@ namespace Template.Infrastructure.Migrations
                 name: "ux_users_email",
                 schema: "public",
                 table: "users",
-                column: "password_hash",
+                column: "email",
                 unique: true);
         }
 

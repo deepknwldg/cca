@@ -10,10 +10,8 @@ public class UserRepository : Repository<User>, IUserRepository
 
     public Task<User?> GetWithProfileAsync(Guid id)
     {
-        throw new NotImplementedException();
-
-        //return _db.Users
-        //    .Include(x => x.Profile)
-        //    .FirstOrDefaultAsync(x => x.Id == id);
+        return _db.Users
+            .Include(x => x.Profile)
+            .FirstOrDefaultAsync(x => x.Id == id);
     }
 }

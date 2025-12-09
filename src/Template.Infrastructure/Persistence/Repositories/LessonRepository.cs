@@ -10,11 +10,9 @@ public class LessonRepository : Repository<Lesson>, ILessonRepository
 
     public async Task<IReadOnlyList<Lesson>> GetByCourseIdAsync(Guid courseId)
     {
-        throw new NotImplementedException();
-
-        //return await _db.Lessons
-        //    .Where(x => x.CourseId == courseId)
-        //    .OrderBy(x => x.Title)
-        //    .ToListAsync();
+        return await _db.Lessons
+            .Where(x => x.CourseId == courseId)
+            .OrderBy(x => x.Title)
+            .ToListAsync();
     }
 }

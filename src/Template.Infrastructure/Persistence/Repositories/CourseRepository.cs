@@ -13,9 +13,8 @@ public class CourseRepository : Repository<Course>, ICourseRepository
 
     public async Task<Course?> GetWithLessonsAsync(Guid id)
     {
-        throw new NotImplementedException();
-        //return await _db.Courses
-        //    .Include(c => c.Lessons)
-        //    .FirstOrDefaultAsync(c => c.Id == id);
+        return await _db.Courses
+            .Include(c => c.Lessons)
+            .FirstOrDefaultAsync(c => c.Id == id);
     }
 }

@@ -15,23 +15,17 @@ public class EnrollmentRepository : IEnrollmentRepository
 
     public async Task AddAsync(Enrollment enrollment)
     {
-        throw new NotImplementedException();
-
-        //await _db.Enrollments.AddAsync(enrollment);
+        await _db.Enrollments.AddAsync(enrollment);
     }
 
     public Task<Enrollment?> GetAsync(Guid userId, Guid courseId)
     {
-        throw new NotImplementedException();
-
-        //return _db.Enrollments
-        //    .FirstOrDefaultAsync(x => x.UserId == userId && x.CourseId == courseId);
+        return _db.Enrollments
+            .FirstOrDefaultAsync(x => x.UserId == userId && x.CourseId == courseId);
     }
 
     public void Remove(Enrollment enrollment)
     {
-        throw new NotImplementedException();
-
-        //_db.Enrollments.Remove(enrollment);
+        _db.Enrollments.Remove(enrollment);
     }
 }

@@ -12,7 +12,8 @@ services:
     environment:
       ASPNETCORE_ENVIRONMENT: "Development"
       ASPNETCORE_URLS: "http://+:8080"
-      ConnectionStrings__DefaultConnection: "Host=postgres;Port=5432;Database=template_db;Username=template_user;Password=template_pass"
+      PostgreSqlOptions__ConnectionString: "Host=postgres;Port=5432;Database=template_db;Username=template_user;"
+      PostgreSqlOptions__DbPassword: "template_pass"
     ports:
       - "8080:8080"
     restart: unless-stopped
@@ -40,7 +41,7 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U template_user"]
+      test: ["CMD-SHELL", "pg_isready -U template_user -d template_db"]
       interval: 5s
       timeout: 5s
       retries: 5

@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Template.Domain.Entities;
 
@@ -24,7 +24,7 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
             .IsRequired()
             .HasComment("Email пользователя");
 
-        builder.Property(u => u.Email)
+        builder.Property(u => u.PasswordHash)
             .HasColumnName("password_hash")
             .HasMaxLength(500)
             .IsRequired()

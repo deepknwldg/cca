@@ -14,3 +14,8 @@ dotnet ef migrations remove -s .\src\Template.Api\Template.Api.csproj -p .\src\T
 ```
 dotnet ef database update -s .\src\Template.Api\Template.Api.csproj -p .\src\Template.Infrastructure\Template.Infrastructure.csproj
 ```
+
+Откат миграции
+```
+dotnet ef database update Init -s .\src\Template.Api\Template.Api.csproj -p .\src\Template.Infrastructure\Template.Infrastructure.csproj
+```

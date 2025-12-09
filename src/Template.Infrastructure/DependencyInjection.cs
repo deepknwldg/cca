@@ -1,8 +1,10 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Npgsql;
 using Template.Application.Abstractions.Persistence.Repositories;
 using Template.Infrastructure.Persistence;
+using Template.Infrastructure.Persistence.Options;
 using Template.Infrastructure.Persistence.Repositories;
 
 namespace Template.Infrastructure;
@@ -13,9 +15,14 @@ public static class DependencyInjection
         this IServiceCollection services,
         IConfiguration config)
     {
+        var options = config.GetSection(nameof(PostgreSqlOptions)).Get<PostgreSqlOptions>();
+        var builder = new NpgsqlConnectionStringBuilder(options!.ConnectionString)
+        {
+            Password = options.DbPassword
+        };
         services.AddDbContext<ApplicationDbContext>(options =>
         {
-            options.UseNpgsql(config.GetConnectionString("DefaultConnection"));
+            options.UseNpgsql(builder.ConnectionString);
         });
 
         services.AddScoped<IUnitOfWork, UnitOfWork>();
