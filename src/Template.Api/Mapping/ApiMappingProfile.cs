@@ -6,7 +6,7 @@ using Template.Api.Models.Lesson;
 using Template.Api.Models.User;
 using Template.Application.Models.Courses;
 using Template.Application.Models.Enrollments;
-using Template.Application.Models.Lesson;
+using Template.Application.Models.Lessons;
 using Template.Application.Models.Users;
 using Template.Domain.Entities;
 

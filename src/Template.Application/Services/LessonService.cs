@@ -1,18 +1,23 @@
-﻿using Mapster;
+using Mapster;
 using Template.Application.Abstractions.Persistence.Repositories;
 using Template.Application.Abstractions.Services;
-using Template.Application.Models.Lesson;
+using Template.Application.Models.Lessons;
 using Template.Domain.Entities;
 
 namespace Template.Application.Services;
 
 public class LessonService : ILessonService
 {
+    private readonly IServiceExecutor _executor;
     private readonly ILessonRepository _repo;
     private readonly IUnitOfWork _uow;
 
-    public LessonService(ILessonRepository repo, IUnitOfWork uow)
+    public LessonService(
+        IServiceExecutor executor,
+        ILessonRepository repo,
+        IUnitOfWork uow)
     {
+        _executor = executor;
         _repo = repo;
         _uow = uow;
     }

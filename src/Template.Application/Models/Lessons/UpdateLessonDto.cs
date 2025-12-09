@@ -1,4 +1,4 @@
-﻿namespace Template.Application.Models.Lesson;
+namespace Template.Application.Models.Lessons;
 
 public class UpdateLessonDto
 {

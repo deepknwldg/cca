@@ -5,7 +5,7 @@ using Template.Api.InternalClasses.Routing;
 using Template.Api.InternalClasses.Tags;
 using Template.Api.Models.Lesson;
 using Template.Application.Abstractions.Services;
-using Template.Application.Models.Lesson;
+using Template.Application.Models.Lessons;
 
 namespace Template.Api.Controllers;
 

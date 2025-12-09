@@ -1,4 +1,4 @@
-﻿using Template.Application.Models.Lesson;
+using Template.Application.Models.Lessons;
 
 namespace Template.Application.Abstractions.Services;
 

@@ -27,5 +27,6 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.UseExceptionHandler();
+app.UseStatusCodePages();
 
 app.Run();
