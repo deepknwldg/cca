@@ -5,7 +5,6 @@ using Template.Api.Models.Course;
 using Template.Api.Models.Enrollments;
 using Template.Api.Models.Lesson;
 using Template.Api.Models.User;
-using Template.Application.Models.Common;
 using Template.Application.Models.Courses;
 using Template.Application.Models.Enrollments;
 using Template.Application.Models.Lessons;
@@ -14,6 +13,11 @@ using Template.Domain.ValueObjects;
 
 namespace Template.Api.Mapping;
 
+/// <summary>
+/// Профиль AutoMapper, описывающий все преобразования между
+/// объектами API‑слоя (запросы/ответы) и DTO‑слоя
+/// бизнес‑логики (Application).
+/// </summary>
 public class ApiMappingProfile : Profile
 {
     public ApiMappingProfile()

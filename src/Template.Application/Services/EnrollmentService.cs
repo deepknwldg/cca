@@ -6,6 +6,11 @@ using Template.Domain.Entities;
 
 namespace Template.Application.Services;
 
+/// <summary>
+/// Сервис бизнес‑логики, отвечающий за запись пользователя на курс
+/// и удаление такой записи. Инкапсулирует работу с репозиториями,
+/// транзакциями и маппингом DTO ↔︎ сущность.
+/// </summary>
 public class EnrollmentService : IEnrollmentService
 {
     private readonly IEnrollmentRepository _enrollmentRepo;
@@ -28,6 +33,7 @@ public class EnrollmentService : IEnrollmentService
         _mapper = mapper;
     }
 
+    /// <inheritdoc/>
     public async Task<EnrollmentResultDto> EnrollAsync(EnrollUserDto dto)
     {
         await _uow.BeginTransactionAsync();
@@ -67,6 +73,7 @@ public class EnrollmentService : IEnrollmentService
         }
     }
 
+    /// <inheritdoc/>
     public async Task<bool> RemoveAsync(Guid userId, Guid courseId)
     {
         await _uow.BeginTransactionAsync();

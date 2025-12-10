@@ -8,6 +8,12 @@ using Template.Domain.ValueObjects;
 
 namespace Template.Application.Services;
 
+/// <summary>
+/// Сервис, предоставляющий операции над пользователями: создание,
+/// чтение, обновление, удаление и постраничный запрос.
+/// Инкапсулирует работу с репозиторием <see cref="IUserRepository"/>,
+/// единицей работы (<see cref="IUnitOfWork"/>) и AutoMapper.
+/// </summary>
 public class UserService : IUserService
 {
     private readonly IUserRepository _repo;
@@ -24,6 +30,7 @@ public class UserService : IUserService
         _mapper = mapper;
     }
 
+    /// <inheritdoc/>
     public async Task<UserResultDto> CreateAsync(CreateUserDto dto, CancellationToken cancellationToken = default)
     {
         await _uow.BeginTransactionAsync(cancellationToken);
@@ -53,18 +60,21 @@ public class UserService : IUserService
         }
     }
 
+    /// <inheritdoc/>
     public async Task<UserResultDto?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
     {
         var entity = await _repo.GetWithProfileAsync(id, cancellationToken);
         return _mapper.Map<UserResultDto>(entity);
     }
 
+    /// <inheritdoc/>
     public async Task<PagedResult<UserResultDto>> GetAllAsync(PagingParams paging, CancellationToken cancellationToken = default)
     {
         var pagedList = await _repo.GetPagedAsync(paging, cancellationToken);
         return _mapper.Map<PagedResult<UserResultDto>>(pagedList);
     }
 
+    /// <inheritdoc/>
     public async Task<bool> UpdateAsync(Guid id, UpdateUserDto dto, CancellationToken cancellationToken = default)
     {
         await _uow.BeginTransactionAsync(cancellationToken);
@@ -98,6 +108,7 @@ public class UserService : IUserService
         }
     }
 
+    /// <inheritdoc/>
     public async Task<bool> DeleteAsync(Guid id, CancellationToken cancellationToken = default)
     {
         await _uow.BeginTransactionAsync(cancellationToken);

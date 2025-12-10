@@ -6,11 +6,29 @@ using Template.Quartz.Options;
 
 namespace Template.Quartz;
 
+/// <summary>
+/// Методы расширения <see cref="IServiceCollection"/> для регистрации Quartz.NET
+/// и привязки его параметров из конфигурационного файла (<c>appsettings.json</c>,
+/// переменных окружения и т.п.).
+/// </summary>
 public static class DependencyInjection
 {
     /// <summary>
-    /// Регистрация Quartz с конфигурацией из appsettings
+    /// Добавляет в контейнер DI все необходимые сервисы Quartz, привязывает
+    /// настройки из секции <c>Quartz</c> конфигурации и регистрирует все задачи,
+    /// указанные в <see cref="QuartzSettings.Jobs"/>.
     /// </summary>
+    /// <param name="services">
+    /// Коллекция сервисов приложения, в которую будут добавлены Quartz‑сервисы.
+    /// </param>
+    /// <param name="configuration">
+    /// Объект <see cref="IConfiguration"/>, из которого извлекаются настройки
+    /// Quartz (секция <c>Quartz</c>).
+    /// </param>
+    /// <returns>
+    /// Ту же коллекцию <see cref="IServiceCollection"/> для поддержки
+    /// цепочки вызовов.
+    /// </returns>
     public static IServiceCollection AddQuartzScheduling(
         this IServiceCollection services,
         IConfiguration configuration)
@@ -36,9 +54,27 @@ public static class DependencyInjection
         return services;
     }
 
-    /// <summary>
-    /// Регистрация отдельной задачи с конфигурацией
+    // <summary>
+    /// Регистрация отдельной задачи (<see cref="IJob"/>) в Quartz с использованием
+    /// параметров, заданных в <see cref="QuartzSettings"/>.
     /// </summary>
+    /// <typeparam name="TJob">
+    /// Тип задачи, реализующий <see cref="IJob"/> и имеющий публичный конструктор без параметров.
+    /// </typeparam>
+    /// <param name="quartz">
+    /// Конфигуратор Quartz, получаемый из <c>services.AddQuartz(...)</c>.
+    /// </param>
+    /// <param name="settings">
+    /// Объект <see cref="QuartzSettings"/> с набором конфигураций всех задач.
+    /// </param>
+    /// <param name="jobConfigKey">
+    /// Ключ, под которым в словаре <see cref="QuartzSettings.Jobs"/>
+    /// хранится конфигурация конкретной задачи.
+    /// </param>
+    /// <exception cref="InvalidOperationException">
+    /// Выбрасывается, если в конфигурации найден ключ задачи, но для него не указано
+    /// обязательное поле <c>CronExpression</c>.
+    /// </exception>
     private static void RegisterJob<TJob>(
         IServiceCollectionQuartzConfigurator quartz,
         QuartzSettings settings,

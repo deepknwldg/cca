@@ -6,6 +6,10 @@ using Template.Domain.Entities;
 
 namespace Template.Application.Services;
 
+/// <summary>
+/// Сервис, реализующий CRUD‑операции для сущности <see cref="Lesson"/>.
+/// Управляет транзакциями, маппингом DTO ↔︎ сущность и репозиторием уроков.
+/// </summary>
 public class LessonService : ILessonService
 {
     private readonly ILessonRepository _repo;
@@ -22,6 +26,7 @@ public class LessonService : ILessonService
         _mapper = mapper;
     }
 
+    /// <inheritdoc/>
     public async Task<LessonResultDto> CreateAsync(CreateLessonDto dto)
     {
         await _uow.BeginTransactionAsync();
@@ -42,18 +47,21 @@ public class LessonService : ILessonService
         }
     }
 
+    /// <inheritdoc/>
     public async Task<LessonResultDto?> GetByIdAsync(Guid id)
     {
         var entity = await _repo.GetByIdAsync(id);
         return _mapper.Map<LessonResultDto>(entity);
     }
 
+    /// <inheritdoc/>
     public async Task<IReadOnlyList<LessonResultDto>> GetByCourseAsync(Guid courseId)
     {
         var items = await _repo.GetByCourseIdAsync(courseId);
         return _mapper.Map<IReadOnlyList<LessonResultDto>>(items);
     }
 
+    /// <inheritdoc/>
     public async Task<bool> UpdateAsync(Guid id, UpdateLessonDto dto)
     {
         await _uow.BeginTransactionAsync();
@@ -79,6 +87,7 @@ public class LessonService : ILessonService
         }
     }
 
+    /// <inheritdoc/>
     public async Task<bool> DeleteAsync(Guid id)
     {
         await _uow.BeginTransactionAsync();

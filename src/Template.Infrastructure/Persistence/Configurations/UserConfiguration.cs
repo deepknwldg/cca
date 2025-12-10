@@ -4,8 +4,18 @@ using Template.Domain.Entities;
 
 namespace Template.Infrastructure.Persistence.Configurations;
 
+/// <summary>
+/// Конфигурация сущности <see cref="User"/> для Entity Framework Core.  
+/// Определяет схему таблицы <c>users</c>, имена столбцов, ограничения,
+/// индексы и комментарии, которые будут записаны в базу данных (если она их поддерживает).
+/// </summary>
 public class UserConfiguration : IEntityTypeConfiguration<User>
 {
+    /// <summary>
+    /// Конфигурирует модель <see cref="User"/> через <paramref name="builder"/>.
+    /// Вызывается автоматически при построении модели EF Core (в <c>OnModelCreating</c>).
+    /// </summary>
+    /// <param name="builder">Построитель конфигурации для типа <see cref="User"/>.</param>
     public void Configure(EntityTypeBuilder<User> builder)
     {
         builder.ToTable("users", t => { t.HasComment("Пользователи платформы"); });

@@ -1,11 +1,21 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Template.Domain.Entities;
 
 namespace Template.Infrastructure.Persistence.Configurations;
 
+/// <summary>
+/// Конфигурация сущности <see cref="UserProfile"/> для Entity Framework Core.  
+/// Определяет схему таблицы <c>user_profiles</c>, имена столбцов, ограничения,
+/// индексы и комментарии, которые будут записаны в базу данных (если она их поддерживает).
+/// </summary>
 public class UserProfileConfiguration : IEntityTypeConfiguration<UserProfile>
 {
+    /// <summary>
+    /// Конфигурирует модель <see cref="UserProfile"/> через <paramref name="builder"/>.
+    /// Вызывается автоматически при построении модели EF Core (в <c>OnModelCreating</c>).
+    /// </summary>
+    /// <param name="builder">Построитель конфигурации для типа <see cref="UserProfile"/>.</param>
     public void Configure(EntityTypeBuilder<UserProfile> builder)
     {
         builder.ToTable("user_profiles", t => { t.HasComment("Расширенная информация о пользователе"); });

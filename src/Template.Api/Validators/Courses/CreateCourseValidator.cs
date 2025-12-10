@@ -3,6 +3,9 @@ using Template.Api.Models.Course;
 
 namespace Template.Api.Validators.Courses;
 
+/// <summary>
+/// Валидатор <see cref="CreateCourseRequest"/> с бизнес‑правилами для создания курса.
+/// </summary>
 public class CreateCourseValidator : AbstractValidator<CreateCourseRequest>
 {
     public CreateCourseValidator()

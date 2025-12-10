@@ -2,8 +2,17 @@ using Template.Api.Exceptions;
 
 namespace Template.Api.Extensions;
 
+/// <summary>
+/// Расширения для регистрации сервисов API‑слоя в контейнере DI.
+/// </summary>
 public static class AddApiServices
 {
+    /// <summary>
+    /// Добавляет в контейнер все сервисы, необходимые для работы API‑слоя:
+    /// контроллеры, OpenAPI/Swagger, обработку проблем и глобальный обработчик исключений.
+    /// </summary>
+    /// <param name="services">Коллекция сервисов приложения.</param>
+    /// <returns>Ту же коллекцию сервисов для цепочки вызовов.</returns>
     public static IServiceCollection AddApiLayer(this IServiceCollection services)
     {
         services.AddControllers();

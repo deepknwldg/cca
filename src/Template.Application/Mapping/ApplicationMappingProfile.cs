@@ -8,6 +8,10 @@ using Template.Domain.Entities;
 
 namespace Template.Application.Mapping;
 
+/// <summary>
+/// Профиль AutoMapper, который описывает преобразования между
+/// DTO‑слоем (Application) и доменными сущностями (Domain) и наоборот.
+/// </summary>
 public class ApplicationMappingProfile : Profile
 {
     public ApplicationMappingProfile()

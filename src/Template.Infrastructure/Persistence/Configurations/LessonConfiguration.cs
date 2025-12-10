@@ -1,11 +1,21 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Template.Domain.Entities;
 
 namespace Template.Infrastructure.Persistence.Configurations;
 
+/// <summary>
+/// Конфигурация сущности <see cref="Lesson"/> для Entity Framework Core.  
+/// Определяет схему таблицы <c>lessons</c>, имена столбцов, ограничения,
+/// индексы и комментарии, которые будут записаны в базу данных (если она их поддерживает).
+/// </summary>
 public class LessonConfiguration : IEntityTypeConfiguration<Lesson>
 {
+    /// <summary>
+    /// Конфигурирует модель <see cref="Lesson"/> через <paramref name="builder"/>.
+    /// Вызывается автоматически при построении модели EF Core (в <c>OnModelCreating</c>).
+    /// </summary>
+    /// <param name="builder">Построитель конфигурации для типа <see cref="Lesson"/>.</param>
     public void Configure(EntityTypeBuilder<Lesson> builder)
     {
         builder.ToTable("lessons", t =>

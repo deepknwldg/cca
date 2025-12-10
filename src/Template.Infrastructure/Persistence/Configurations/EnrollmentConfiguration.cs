@@ -4,8 +4,18 @@ using Template.Domain.Entities;
 
 namespace Template.Infrastructure.Persistence.Configurations;
 
+/// <summary>
+/// Конфигурация сущности <see cref="Enrollment"/> для Entity Framework Core.  
+/// Определяет схему таблицы <c>enrollments</c>, имена столбцов, ограничения,
+/// индексы и комментарии, которые будут записаны в базу данных (если она их поддерживает).
+/// </summary>
 public class EnrollmentConfiguration : IEntityTypeConfiguration<Enrollment>
 {
+    /// <summary>
+    /// Конфигурирует модель <see cref="Enrollment"/> через <paramref name="builder"/>.
+    /// Вызывается автоматически при построении модели EF Core (в <c>OnModelCreating</c>).
+    /// </summary>
+    /// <param name="builder">Построитель конфигурации для типа <see cref="Enrollment"/>.</param>
     public void Configure(EntityTypeBuilder<Enrollment> builder)
     {
         builder.ToTable("enrollments", t => { t.HasComment("Связь пользователей с курсами (многие ко многим)"); });

@@ -1,9 +1,15 @@
 namespace Template.Api.InternalClasses.Routing;
 
+/// <summary>
+/// Содержит константы URL‑маршрутов, используемых в API проекта.
+/// </summary>
 internal static class ApiRouting
 {
     private const string BaseUrl = "template-service";
 
+    /// <summary>
+    /// Маршруты, относящиеся к курсам.
+    /// </summary>
     public static class Courses
     {
         private const string Controller = $"{BaseUrl}/courses";
@@ -15,6 +21,9 @@ internal static class ApiRouting
         public const string Delete = $"{Controller}/delete/{{id:guid}}";
     }
 
+    /// <summary>
+    /// Маршруты, относящиеся к записям пользователей на курсы (enrollments).
+    /// </summary>
     public static class Enrollments
     {
         private const string Controller = $"{BaseUrl}/enrollments";
@@ -23,6 +32,9 @@ internal static class ApiRouting
         public const string Remove = $"{Controller}/remove/{{userId:guid}}/{{courseId:guid}}";
     }
 
+    /// <summary>
+    /// Маршруты, относящиеся к урокам.
+    /// </summary>
     public static class Lessons
     {
         private const string Controller = $"{BaseUrl}/lessons";
@@ -34,6 +46,9 @@ internal static class ApiRouting
         public const string Delete = $"{Controller}/delete/{{id:guid}}";
     }
 
+    /// <summary>
+    /// Маршруты, относящиеся к пользователям.
+    /// </summary>
     public static class Users
     {
         private const string Controller = $"{BaseUrl}/users";

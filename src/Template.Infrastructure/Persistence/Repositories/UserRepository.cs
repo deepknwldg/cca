@@ -6,10 +6,20 @@ using Template.Domain.ValueObjects;
 
 namespace Template.Infrastructure.Persistence.Repositories;
 
+/// <summary>
+/// Репозиторий для работы с сущностью <see cref="User"/>.  
+/// Наследуется от базового <see cref="Repository{User}"/> и реализует
+/// методы, требующие eager‑loading профиля и пагинации с профилем.
+/// </summary>
 public class UserRepository : Repository<User>, IUserRepository
 {
+    /// <summary>
+    /// Инициализирует репозиторий, получая контекст БД.
+    /// </summary>
+    /// <param name="db">Экземпляр <see cref="ApplicationDbContext"/>.</param>
     public UserRepository(ApplicationDbContext db) : base(db) { }
 
+    /// <inheritdoc />
     public Task<User?> GetWithProfileAsync(Guid id, CancellationToken cancellationToken = default)
     {
         return _db.Users
@@ -17,6 +27,7 @@ public class UserRepository : Repository<User>, IUserRepository
             .FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
     }
 
+    /// <inheritdoc />
     public override async Task<PagedResult<User>> GetPagedAsync(
          PagingParams paging,
          CancellationToken cancellationToken = default)

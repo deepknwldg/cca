@@ -6,12 +6,19 @@ using Template.Domain.Entities;
 
 namespace Template.Application.Services;
 
+/// <summary>
+/// Реализация <see cref="ICourseService"/>. Инкапсулирует бизнес‑логику
+/// управления курсами и координирует работу репозитория и юнит‑оф‑ворка.
+/// </summary>
 public class CourseService : ICourseService
 {
     private readonly ICourseRepository _courseRepository;
     private readonly IUnitOfWork _uow;
     private readonly IMapper _mapper;
 
+    /// <summary>
+    /// Конструктор с внедрением зависимостей.
+    /// </summary>
     public CourseService(
         ICourseRepository courseRepository,
         IUnitOfWork uow,
@@ -22,6 +29,7 @@ public class CourseService : ICourseService
         _mapper = mapper;
     }
 
+    /// <inheritdoc/>
     public async Task<CourseResultDto> CreateAsync(CreateCourseDto dto)
     {
         await _uow.BeginTransactionAsync();
@@ -43,18 +51,21 @@ public class CourseService : ICourseService
         }
     }
 
+    /// <inheritdoc/>
     public async Task<CourseResultDto?> GetByIdAsync(Guid id)
     {
         var entity = await _courseRepository.GetByIdAsync(id);
         return _mapper.Map<CourseResultDto>(entity);
     }
 
+    /// <inheritdoc/>
     public async Task<IReadOnlyList<CourseResultDto>> GetAllAsync()
     {
         var items = await _courseRepository.GetAllAsync();
         return _mapper.Map<IReadOnlyList<CourseResultDto>>(items);
     }
 
+    /// <inheritdoc/>
     public async Task<bool> UpdateAsync(Guid id, UpdateCourseDto dto)
     {
         await _uow.BeginTransactionAsync();
@@ -82,6 +93,7 @@ public class CourseService : ICourseService
         }
     }
 
+    /// <inheritdoc/>
     public async Task<bool> DeleteAsync(Guid id)
     {
         await _uow.BeginTransactionAsync();

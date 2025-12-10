@@ -3,6 +3,13 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Template.Api.Exceptions;
 
+/// <summary>
+/// Глобальный обработчик исключений, который перехватывает необработанные
+/// ошибки, логирует их и формирует ответ в формате <see cref="ProblemDetails"/>.
+/// </summary>
+/// <remarks>
+/// Обработчик регистрируется в пайплайне через <c>services.AddExceptionHandler&lt;GlobalExceptionHandler&gt;()</c>.
+/// </remarks>
 public class GlobalExceptionHandler(
     ILogger<GlobalExceptionHandler> logger,
     IProblemDetailsService problemDetails) : IExceptionHandler
@@ -10,6 +17,17 @@ public class GlobalExceptionHandler(
     private readonly ILogger<GlobalExceptionHandler> _logger = logger;
     private readonly IProblemDetailsService _problemDetails = problemDetails;
 
+    /// <summary>
+    /// Пытается обработать возникшее исключение, сформировать <see cref="ProblemDetails"/>
+    /// и записать его в HTTP‑ответ.
+    /// </summary>
+    /// <param name="httpContext">Текущий <see cref="HttpContext"/> запроса.</param>
+    /// <param name="exception">Исключение, которое нужно обработать.</param>
+    /// <param name="cancellationToken">Токен отмены операции.</param>
+    /// <returns>
+    /// <c>true</c>, если исключение было обработано и дальнейшая обработка в пайплайне не требуется;
+    /// иначе <c>false</c>.
+    /// </returns>
     public async ValueTask<bool> TryHandleAsync(
         HttpContext httpContext,
         Exception exception,
