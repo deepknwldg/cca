@@ -1,4 +1,4 @@
-using Mapster;
+using AutoMapper;
 using Template.Application.Abstractions.Persistence.Repositories;
 using Template.Application.Abstractions.Services;
 using Template.Application.Models.Enrollments;
@@ -12,17 +12,20 @@ public class EnrollmentService : IEnrollmentService
     private readonly IUserRepository _userRepo;
     private readonly ICourseRepository _courseRepo;
     private readonly IUnitOfWork _uow;
+    private readonly IMapper _mapper;
 
     public EnrollmentService(
         IEnrollmentRepository enrollmentRepo,
         IUserRepository userRepo,
         ICourseRepository courseRepo,
-        IUnitOfWork uow)
+        IUnitOfWork uow,
+        IMapper mapper)
     {
         _enrollmentRepo = enrollmentRepo;
         _userRepo = userRepo;
         _courseRepo = courseRepo;
         _uow = uow;
+        _mapper = mapper;
     }
 
     public async Task<EnrollmentResultDto> EnrollAsync(EnrollUserDto dto)
@@ -54,7 +57,8 @@ public class EnrollmentService : IEnrollmentService
             await _uow.SaveChangesAsync();
 
             await _uow.CommitAsync();
-            return enrollment.Adapt<EnrollmentResultDto>();
+
+            return _mapper.Map<EnrollmentResultDto>(enrollment);
         }
         catch
         {

@@ -11,7 +11,7 @@ public class CreateUserValidator : AbstractValidator<CreateUserDto>
             .NotEmpty()
             .EmailAddress();
 
-        RuleFor(x => x.PasswordHash)
+        RuleFor(x => x.Password)
             .NotEmpty();
 
         RuleFor(x => x.FirstName)

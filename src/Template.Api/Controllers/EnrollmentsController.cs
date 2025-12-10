@@ -1,5 +1,5 @@
 using System.ComponentModel;
-using Mapster;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Template.Api.InternalClasses.Routing;
 using Template.Api.InternalClasses.Tags;
@@ -15,10 +15,14 @@ namespace Template.Api.Controllers;
 public class EnrollmentsController : ControllerBase
 {
     private readonly IEnrollmentService _service;
+    private readonly IMapper _mapper;
 
-    public EnrollmentsController(IEnrollmentService service)
+    public EnrollmentsController(
+        IEnrollmentService service,
+        IMapper mapper)
     {
         _service = service;
+        _mapper = mapper;
     }
 
     [EndpointSummary("Регистрация на курс")]
@@ -27,7 +31,7 @@ public class EnrollmentsController : ControllerBase
     public async Task<IActionResult> Enroll(
         [Description("Тело запроса"), FromBody] EnrollUserRequest request)
     {
-        var dto = request.Adapt<EnrollUserDto>();
+        var dto = _mapper.Map<EnrollUserDto>(request);
         var result = await _service.EnrollAsync(dto);
 
         return Ok(result);

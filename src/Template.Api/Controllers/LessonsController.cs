@@ -1,5 +1,5 @@
 using System.ComponentModel;
-using Mapster;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Template.Api.InternalClasses.Routing;
 using Template.Api.InternalClasses.Tags;
@@ -15,10 +15,13 @@ namespace Template.Api.Controllers;
 public class LessonsController : ControllerBase
 {
     private readonly ILessonService _service;
-
-    public LessonsController(ILessonService service)
+    private readonly IMapper _mapper;
+    public LessonsController(
+        ILessonService service,
+        IMapper mapper)
     {
         _service = service;
+        _mapper = mapper;
     }
 
     [EndpointSummary("Создание урока")]
@@ -27,7 +30,7 @@ public class LessonsController : ControllerBase
     public async Task<IActionResult> Create(
         [Description("Тело запроса"), FromBody] CreateLessonRequest request)
     {
-        var dto = request.Adapt<CreateLessonDto>();
+        var dto = _mapper.Map<CreateLessonDto>(request);
         var result = await _service.CreateAsync(dto);
         return CreatedAtAction(nameof(GetById), new { id = result.Id }, result);
     }
@@ -59,7 +62,7 @@ public class LessonsController : ControllerBase
          [Description("Идентификатор курса"), FromRoute] Guid id,
          [Description("Тело запроса"), FromBody] UpdateLessonRequest request)
     {
-        var dto = request.Adapt<UpdateLessonDto>();
+        var dto = _mapper.Map<UpdateLessonDto>(request);
         var updated = await _service.UpdateAsync(id, dto);
         return updated ? NoContent() : NotFound();
     }

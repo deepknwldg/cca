@@ -1,11 +1,13 @@
 using System.ComponentModel;
-using Mapster;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Template.Api.InternalClasses.Routing;
 using Template.Api.InternalClasses.Tags;
+using Template.Api.Models.Common;
 using Template.Api.Models.User;
 using Template.Application.Abstractions.Services;
 using Template.Application.Models.Users;
+using Template.Domain.ValueObjects;
 
 namespace Template.Api.Controllers;
 
@@ -15,20 +17,25 @@ namespace Template.Api.Controllers;
 public class UsersController : ControllerBase
 {
     private readonly IUserService _service;
+    private readonly IMapper _mapper;
 
-    public UsersController(IUserService service)
+    public UsersController(
+        IUserService service,
+        IMapper mapper)
     {
         _service = service;
+        _mapper = mapper;
     }
 
     [EndpointSummary("Создание пользователя")]
     [EndpointName(ApiRouting.Users.Create)]
     [HttpPost(ApiRouting.Users.Create)]
     public async Task<IActionResult> Create(
-        [Description("Тело запроса"), FromBody] CreateUserRequest request)
+        [Description("Тело запроса"), FromBody] CreateUserRequest request,
+        CancellationToken cancellationToken)
     {
-        var dto = request.Adapt<CreateUserDto>();
-        var result = await _service.CreateAsync(dto);
+        var dto = _mapper.Map<CreateUserDto>(request);
+        var result = await _service.CreateAsync(dto, cancellationToken);
         return CreatedAtAction(nameof(GetById), new { id = result.Id }, result);
     }
 
@@ -36,18 +43,22 @@ public class UsersController : ControllerBase
     [EndpointName(ApiRouting.Users.GetById)]
     [HttpGet(ApiRouting.Users.GetById)]
     public async Task<IActionResult> GetById(
-        [Description("Идентификатор пользователя"), FromRoute] Guid id)
+        [Description("Идентификатор пользователя"), FromRoute] Guid id,
+        CancellationToken cancellationToken)
     {
-        var user = await _service.GetByIdAsync(id);
+        var user = await _service.GetByIdAsync(id, cancellationToken);
         return user is null ? NotFound() : Ok(user);
     }
 
     [EndpointSummary("Получение всех пользователей")]
     [EndpointName(ApiRouting.Users.GetAll)]
     [HttpGet(ApiRouting.Users.GetAll)]
-    public async Task<IActionResult> GetAll()
+    public async Task<IActionResult> GetAll(
+        [Description("Параметры для пагинации")][FromQuery] PagedRequest request,
+        CancellationToken cancellationToken)
     {
-        var items = await _service.GetAllAsync();
+        var paging = _mapper.Map<PagingParams>(request);
+        var items = await _service.GetAllAsync(paging, cancellationToken);
         return Ok(items);
     }
 
@@ -58,7 +69,7 @@ public class UsersController : ControllerBase
         [Description("Идентификатор пользователя"), FromRoute] Guid id,
         [Description("Тело запроса"), FromBody] UpdateUserRequest request)
     {
-        var dto = request.Adapt<UpdateUserDto>();
+        var dto = _mapper.Map<UpdateUserDto>(request);
         var updated = await _service.UpdateAsync(id, dto);
         return updated ? NoContent() : NotFound();
     }

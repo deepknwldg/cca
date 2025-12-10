@@ -1,17 +1,10 @@
-using System.Reflection;
-using Mapster;
-
 namespace Template.Api.Extensions;
 
 public static class AddMapsterServices
 {
-    public static IServiceCollection AddMapster(this IServiceCollection services)
+    public static IServiceCollection AddAutoMapper(this IServiceCollection services)
     {
-        var config = TypeAdapterConfig.GlobalSettings;
-        config.Scan(Assembly.GetExecutingAssembly());
-        services.AddSingleton(config);
-
-        //services.AddScoped<IMapper, ServiceMapper>();
+        services.AddAutoMapper(cfg => { }, typeof(AssemblyMarker), typeof(Application.AssemblyMarker));
         return services;
     }
 }

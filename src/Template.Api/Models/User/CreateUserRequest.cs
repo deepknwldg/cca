@@ -1,10 +1,9 @@
-﻿namespace Template.Api.Models.User;
+namespace Template.Api.Models.User;
 
 public class CreateUserRequest
 {
     public string Email { get; set; } = default!;
     public string Password { get; set; } = default!;
-
     public string FirstName { get; set; } = default!;
     public string LastName { get; set; } = default!;
 }

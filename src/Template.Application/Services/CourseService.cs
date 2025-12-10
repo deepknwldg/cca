@@ -1,4 +1,4 @@
-﻿using Mapster;
+using AutoMapper;
 using Template.Application.Abstractions.Persistence.Repositories;
 using Template.Application.Abstractions.Services;
 using Template.Application.Models.Courses;
@@ -10,11 +10,16 @@ public class CourseService : ICourseService
 {
     private readonly ICourseRepository _courseRepository;
     private readonly IUnitOfWork _uow;
+    private readonly IMapper _mapper;
 
-    public CourseService(ICourseRepository courseRepository, IUnitOfWork uow)
+    public CourseService(
+        ICourseRepository courseRepository,
+        IUnitOfWork uow,
+        IMapper mapper)
     {
         _courseRepository = courseRepository;
         _uow = uow;
+        _mapper = mapper;
     }
 
     public async Task<CourseResultDto> CreateAsync(CreateCourseDto dto)
@@ -23,13 +28,13 @@ public class CourseService : ICourseService
 
         try
         {
-            var entity = dto.Adapt<Course>();
+            var entity = _mapper.Map<Course>(dto);
 
             await _courseRepository.AddAsync(entity);
             await _uow.SaveChangesAsync();
 
             await _uow.CommitAsync();
-            return entity.Adapt<CourseResultDto>();
+            return _mapper.Map<CourseResultDto>(entity);
         }
         catch
         {
@@ -41,13 +46,13 @@ public class CourseService : ICourseService
     public async Task<CourseResultDto?> GetByIdAsync(Guid id)
     {
         var entity = await _courseRepository.GetByIdAsync(id);
-        return entity?.Adapt<CourseResultDto>();
+        return _mapper.Map<CourseResultDto>(entity);
     }
 
     public async Task<IReadOnlyList<CourseResultDto>> GetAllAsync()
     {
         var items = await _courseRepository.GetAllAsync();
-        return items.Adapt<IReadOnlyList<CourseResultDto>>();
+        return _mapper.Map<IReadOnlyList<CourseResultDto>>(items);
     }
 
     public async Task<bool> UpdateAsync(Guid id, UpdateCourseDto dto)
@@ -62,8 +67,7 @@ public class CourseService : ICourseService
                 await _uow.RollbackAsync();
                 return false;
             }
-
-            dto.Adapt(entity);
+            entity = _mapper.Map<Course>(dto);
             _courseRepository.Update(entity);
 
             await _uow.SaveChangesAsync();

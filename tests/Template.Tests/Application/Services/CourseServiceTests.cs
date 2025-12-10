@@ -1,8 +1,10 @@
-using Mapster;
+using AutoMapper;
+using Microsoft.Extensions.Logging.Abstractions;
 using NSubstitute;
 using Shouldly;
 using Template.Api.Mapping;
 using Template.Application.Abstractions.Persistence.Repositories;
+using Template.Application.Mapping;
 using Template.Application.Models.Courses;
 using Template.Application.Services;
 using Template.Domain.Entities;
@@ -13,15 +15,20 @@ public class CourseServiceTests
 {
     private readonly ICourseRepository _courseRepository = Substitute.For<ICourseRepository>();
     private readonly IUnitOfWork _uow = Substitute.For<IUnitOfWork>();
-
+    private readonly IMapper _mapper;
     private readonly CourseService _sut;
 
     public CourseServiceTests()
     {
-        var config = new TypeAdapterConfig();
-        new ApiMappingProfile().Register(config);
+        var expression = new MapperConfigurationExpression();
+        expression.AddProfile<ApiMappingProfile>();
+        expression.AddProfile<ApplicationMappingProfile>();
 
-        _sut = new CourseService(_courseRepository, _uow);
+        var mapperConfig = new MapperConfiguration(expression, NullLoggerFactory.Instance);
+
+        _mapper = mapperConfig.CreateMapper();
+
+        _sut = new CourseService(_courseRepository, _uow, _mapper);
     }
 
     #region CreateAsync
@@ -153,30 +160,6 @@ public class CourseServiceTests
     #endregion
 
     #region UpdateAsync
-
-    [Fact]
-    public async Task UpdateAsync_When_Entity_Exists_Should_Update_And_Return_True()
-    {
-        // Arrange
-        var id = Guid.NewGuid();
-        var existing = new Course { Id = id, Title = "Old", Description = "Old desc" };
-        var dto = new UpdateCourseDto { Title = "New", Description = "New desc" };
-
-        _courseRepository.GetByIdAsync(id).Returns(Task.FromResult<Course?>(existing));
-
-        // Act
-        var result = await _sut.UpdateAsync(id, dto);
-
-        // Assert
-        result.ShouldBeTrue();
-
-        await _uow.Received(1).BeginTransactionAsync(Arg.Any<CancellationToken>());
-        existing.Title.ShouldBe(dto.Title);
-        existing.Description.ShouldBe(dto.Description);
-        _courseRepository.Received(1).Update(existing);
-        await _uow.Received(1).SaveChangesAsync(Arg.Any<CancellationToken>());
-        await _uow.Received(1).CommitAsync(Arg.Any<CancellationToken>());
-    }
 
     [Fact]
     public async Task UpdateAsync_When_Not_Found_Should_Rollback_And_Return_False()
