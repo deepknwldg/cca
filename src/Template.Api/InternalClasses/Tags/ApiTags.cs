@@ -3,7 +3,7 @@ namespace Template.Api.InternalClasses.Tags;
 /// <summary>
 /// Константы тегов, используемых в Swagger/OpenAPI для группировки эндпоинтов.
 /// </summary>
-internal class ApiTags
+internal sealed class ApiTags
 {
     public const string Courses = "courses";
     public const string Enrollments = "enrollments";
