@@ -7,6 +7,7 @@
     <Project Path="src/Template.Application/Template.Application.csproj" Id="2248b4b0-55df-43fc-baf0-4eb4432236e3" />
     <Project Path="src/Template.Domain/Template.Domain.csproj" Id="b71fd04f-a053-4782-9915-ccb989566827" />
     <Project Path="src/Template.Infrastructure/Template.Infrastructure.csproj" Id="a2ee934c-1c36-4407-83c7-9faac2199f2e" />
+    <Project Path="src/Template.Quartz/Template.Quartz.csproj" Id="eb026cb4-3827-4d1a-98f3-6a698a0a9d1d" />
   </Folder>
   <Folder Name="/tests/">
     <Project Path="tests/Template.Tests/Template.Tests.csproj" Id="7a44a6d2-4071-4788-883e-0187a7042016" />

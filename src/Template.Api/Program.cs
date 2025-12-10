@@ -2,6 +2,7 @@ using Serilog;
 using Template.Api.Extensions;
 using Template.Application;
 using Template.Infrastructure;
+using Template.Quartz;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +13,7 @@ builder.Services.AddAutoMapper();
 builder.Services.AddApplicationLayer();
 builder.Services.AddInfrastructureLayer(builder.Configuration);
 builder.Services.AddApiLayer();
+builder.Services.AddQuartzScheduling(builder.Configuration);
 
 var app = builder.Build();
 
