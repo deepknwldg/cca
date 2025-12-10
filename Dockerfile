@@ -11,6 +11,7 @@ COPY src/Template.Api/Template.Api.csproj src/Template.Api/
 COPY src/Template.Application/Template.Application.csproj src/Template.Application/
 COPY src/Template.Infrastructure/Template.Infrastructure.csproj src/Template.Infrastructure/
 COPY src/Template.Domain/Template.Domain.csproj src/Template.Domain/
+COPY src/Template.Quartz/Template.Quartz.csproj src/Template.Quartz/
 
 RUN dotnet restore src/Template.Api/Template.Api.csproj
 
