@@ -14,6 +14,7 @@ builder.Services.AddApplicationLayer();
 builder.Services.AddInfrastructureLayer(builder.Configuration);
 builder.Services.AddApiLayer();
 builder.Services.AddQuartzScheduling(builder.Configuration);
+builder.Services.AddFluentValidation();
 
 var app = builder.Build();
 

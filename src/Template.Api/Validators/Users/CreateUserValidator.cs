@@ -1,9 +1,9 @@
 using FluentValidation;
-using Template.Application.Models.Users;
+using Template.Api.Models.User;
 
 namespace Template.Application.Validators.Users;
 
-public class CreateUserValidator : AbstractValidator<CreateUserDto>
+public class CreateUserValidator : AbstractValidator<CreateUserRequest>
 {
     public CreateUserValidator()
     {

@@ -1,9 +1,9 @@
 using FluentValidation;
-using Template.Application.Models.Enrollments;
+using Template.Api.Models.Enrollments;
 
 namespace Template.Application.Validators.Enrollments;
 
-public class EnrollUserValidator : AbstractValidator<EnrollUserDto>
+public class EnrollUserValidator : AbstractValidator<EnrollUserRequest>
 {
     public EnrollUserValidator()
     {

@@ -1,9 +1,9 @@
 using FluentValidation;
-using Template.Application.Models.Courses;
+using Template.Api.Models.Course;
 
 namespace Template.Application.Validators.Courses;
 
-public class UpdateCourseValidator : AbstractValidator<UpdateCourseDto>
+public class UpdateCourseValidator : AbstractValidator<UpdateCourseRequest>
 {
     public UpdateCourseValidator()
     {

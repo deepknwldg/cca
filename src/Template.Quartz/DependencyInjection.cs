@@ -23,10 +23,6 @@ public static class DependencyInjection
         // Регистрация Quartz
         services.AddQuartz(quartz =>
         {
-            // Идентификатор scheduler'а
-            quartz.SchedulerId = "MyApp-Scheduler";
-            quartz.SchedulerName = "MyApp Scheduler";
-
             // Регистрация всех задач
             RegisterJob<SampleJob>(quartz, quartzSettings, "SampleJob");
         });

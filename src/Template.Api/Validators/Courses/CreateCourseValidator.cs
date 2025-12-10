@@ -1,9 +1,9 @@
 using FluentValidation;
-using Template.Application.Models.Courses;
+using Template.Api.Models.Course;
 
-namespace Template.Application.Validators.Courses;
+namespace Template.Api.Validators.Courses;
 
-public class CreateCourseValidator : AbstractValidator<CreateCourseDto>
+public class CreateCourseValidator : AbstractValidator<CreateCourseRequest>
 {
     public CreateCourseValidator()
     {

@@ -8,18 +8,15 @@ namespace Template.Application.Services;
 
 public class LessonService : ILessonService
 {
-    private readonly IServiceExecutor _executor;
     private readonly ILessonRepository _repo;
     private readonly IUnitOfWork _uow;
     private readonly IMapper _mapper;
 
     public LessonService(
-        IServiceExecutor executor,
         ILessonRepository repo,
         IUnitOfWork uow,
         IMapper mapper)
     {
-        _executor = executor;
         _repo = repo;
         _uow = uow;
         _mapper = mapper;
@@ -88,7 +85,10 @@ public class LessonService : ILessonService
         try
         {
             var entity = await _repo.GetByIdAsync(id);
-            if (entity == null) return false;
+            if (entity == null)
+            {
+                return false;
+            }
 
             _repo.Remove(entity);
             await _uow.SaveChangesAsync();

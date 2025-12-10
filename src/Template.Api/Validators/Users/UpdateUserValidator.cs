@@ -1,9 +1,9 @@
 using FluentValidation;
-using Template.Application.Models.Users;
+using Template.Api.Models.User;
 
 namespace Template.Application.Validators.Users;
 
-public class UpdateUserValidator : AbstractValidator<UpdateUserDto>
+public class UpdateUserValidator : AbstractValidator<UpdateUserRequest>
 {
     public UpdateUserValidator()
     {
