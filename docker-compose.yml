@@ -14,9 +14,6 @@ services:
       ASPNETCORE_URLS: "http://+:8080"
       PostgreSqlOptions__ConnectionString: "Host=postgres;Port=5432;Database=template_db;Username=template_user;"
       PostgreSqlOptions__DbPassword: "template_pass"
-      SerilogWriteTo1ArgsnodeUris: "http://host:9200"
-      SerilogWriteTo1ArgsindexFormat: "template-service-logs-{0:yyyy.MM}"
-      SerilogMinimumLevelDefault: "Information"
       LD_LIBRARY_PATH: "/usr/lib:/usr/local/lib"
     ports:
       - "8080:8080"
