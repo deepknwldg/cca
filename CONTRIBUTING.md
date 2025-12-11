@@ -16,7 +16,6 @@
     ├── src/                    // Ваши проекты (Api, Application, Domain, Infrastructure, Quartz)
     └── tests/                  // Ваш проект тестов
 ```
-Важно: В папке templates не должно быть файла решения (`.sln` или `.slnx`), а также папок `bin, obj, .vs` и прочих временных файлов.
 
 ## 2. Конфигурация Файлов
 ### 2.1. Конфигурация template.json
@@ -119,9 +118,7 @@ dotnet new install bin/Release/Aktiv.CleanArchitecture.Template.1.0.0.nupkg
 
 
 ```
-dotnet new aktiv-clean -n MyNewProject
+dotnet new aktiv-clean -n MyNewProject -o C:\Documents\Repositories\MyNewProject
 ```
 
 Это должно создать папку MyNewProject, содержащую один файл решения (MyNewProject.slnx) и всю структуру проектов Clean Architecture, где все пространства имен заменены на MyNewProject.
-
-По факту у меня не так, я не понимаю создаются два .slnx с разным расположением в папках. Один из них корректный другой нет.
